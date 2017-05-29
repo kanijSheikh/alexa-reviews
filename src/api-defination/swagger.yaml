@@ -1,0 +1,109 @@
+---
+swagger: "2.0"
+info:
+  description: "This is the Product Catalogue Service API's \
+    \ for retreiving, creating and deleting the product"
+  version: "1.0.0"
+  title: "Product Catalogue Service API"
+host: "localhost"
+basePath: "http://localhost:9090"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /products:
+    get:
+      tags:
+      - "Product Catalogue Service API"
+      description: "1.Return a collection of Products when user have not provided\
+        \ the product id and product type as a request param.2.Return a colletion\
+        \ of products when product type is given, because one type can have\
+        \ multiple products.3.Return a single Product if product id and product type\
+        \ is given, becuase it is a unique combination. User can see the product price as well through\
+        \ this API for given product Id."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "type"
+        in: "query"
+        description: "product type to query for Product"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "query"
+        description: "product id to query for Product"
+        required: false
+        type: "number"
+        format: "int64"
+      responses:
+        200:
+          description: "Return a products with requested attributes"
+          schema:
+            $ref: "#/definitions/Product"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Entity Not found"
+        500:
+          description: "Internal Server Error"
+    post:
+      tags:
+      - "Product Catalogue Service API"
+      description: "List of products will get created or added to the catalogue"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "productDto"
+        description: "payload for creation of collection of products"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Bad Request"
+        500:
+          description: "Internal Server Error"
+  /product/{id}:
+    delete:
+      tags:
+      - "Product Catalogue Service API"
+      description: "Delete a Product for given product id."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id to delete product"
+        required: true
+        type: "number"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Entity Not found"
+        500:
+          description: "Internal Server Error"
+definitions:
+  Product:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      type:
+        type: "string"
+      price:
+        type: "string"
