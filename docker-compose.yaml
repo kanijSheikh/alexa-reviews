@@ -1,0 +1,20 @@
+version: '2'
+services:
+
+  mongo:
+    image: mongo:latest
+    restart: always
+
+  app:
+    build: .
+    restart: always
+    volumes:
+      - .
+    links:
+      - mongo
+    ports:
+      - "80:80"
+
+
+
+

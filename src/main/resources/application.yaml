@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/?maxpoolsize=2
+      database: AlexaReviews
+      host: localhost
+      port: 27017
+
+page:
+  size: 1
+limit:
+  size: 10
